@@ -1,7 +1,9 @@
+'use client';
+
 import { Box, Flex, Image } from '@chakra-ui/react';
 import { Navbar } from '@/components/navbar';
 import { MenuData } from '@/types';
-import { useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 const universityMenu: MenuData = {
@@ -51,28 +53,47 @@ const universityMenu: MenuData = {
     },
   ],
 };
+const SCROLL_THRESHOLD = 150;
+const LOGO_WIDTH = 210;
 
 export const HeaderBottom = () => {
+  const [isSticky, setIsSticky] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
-  if (headerRef?.current) {
-    console.log(headerRef.current.clientWidth);
-  }
-  const handleClick = (e: React.MouseEvent) => {
+
+  const handleScroll = useCallback(() => {
+    setIsSticky(window.scrollY > SCROLL_THRESHOLD);
+  }, []);
+
+  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.closest('[data-menu-trigger]')) {
+      e.stopPropagation();
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    handleScroll();
+
+    const scrollListener = () => {
+      requestAnimationFrame(handleScroll);
+    };
+
+    window.addEventListener('scroll', scrollListener, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', scrollListener);
+    };
+  }, [handleScroll]);
+
   return (
     <Box
       ref={headerRef}
-      marginLeft="auto"
-      maxWidth={1440}
-      position="relative"
       onClick={handleClick}
-      padding="25px 20px"
-      borderBottom="1px solid #c7d5eb"
+      width="full"
+      transition="all 0.3s ease"
+      className={`header__bottom ${isSticky ? 'header__bottom--fixed' : ''}`}
+      aria-label="Основная навигация"
     >
-      <Flex width="full" align="center">
+      <Flex align="center" maxW="1440px" margin="0 auto" px={4}>
         <Box
           display="flex"
           justifyContent="flex-start"
@@ -83,19 +104,26 @@ export const HeaderBottom = () => {
           color="#000000"
           textDecoration="none"
           marginRight="auto"
+          flexShrink={0}
         >
-          <Link href="#">
-            <Image
-              src="https://uust.ru/static/New_files_ugatu/images/redesign/uunit.svg"
-              w="210px"
-            />
+          <Link href="/" passHref>
+            <Box aria-label="На главную страницу">
+              <Image
+                src="https://uust.ru/static/New_files_ugatu/images/redesign/uunit.svg"
+                w={`${LOGO_WIDTH}px`}
+                alt="Логотип университета"
+                height="auto"
+                loading="eager"
+              />
+            </Box>
           </Link>
-
         </Box>
+
         <Navbar
           menu={universityMenu}
           headerRef={headerRef}
           handleClickRef={handleClick}
+          isSticky={isSticky}
         />
       </Flex>
     </Box>

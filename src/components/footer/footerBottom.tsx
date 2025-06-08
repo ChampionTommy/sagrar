@@ -9,13 +9,13 @@ export const FooterBottom = () => {
       alignItems="center"
       flexWrap="wrap"
     >
-      <Text fontSize="12px" lineHeight="14px">
+      <Text fontSize="12px" lineHeight="14px" color="#FFA039">
         © ФГБОУ ВО «Уфимский университет науки и технологий»
       </Text>
-      <Text fontSize="12px" lineHeight="14px">
+      <Text fontSize="12px" lineHeight="14px" color="#FFA039">
         <a href="/sitemap/">Карта сайта</a>
       </Text>
-      <Text fontSize="12px" lineHeight="14px">
+      <Text fontSize="12px" lineHeight="14px" color="#FFA039">
         <a href="/sveden/">Сведения об образовательной организации</a>
       </Text>
     </Flex>

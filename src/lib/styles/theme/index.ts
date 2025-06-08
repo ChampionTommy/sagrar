@@ -1,7 +1,7 @@
 import { createSystem, defaultConfig } from '@chakra-ui/react';
 import { fonts } from './fonts';
-import buttonRecipe from '@/lib/styles/theme/recipes/button.recipe';
 import boxRecipe from '@/lib/styles/theme/recipes/box.recipe';
+import { buttonRecipe } from '@/lib/styles/theme/recipes/button.recipe';
 
 const customTheme = {
   theme: {

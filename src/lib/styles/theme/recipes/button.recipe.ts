@@ -6,83 +6,70 @@ export const buttonRecipe = defineRecipe({
     fontSize: '14px',
     lineHeight: '16px',
     borderRadius: '10px',
-    transition: 'color 0.3s',
+    transition: 'all 0.3s',
     cursor: 'pointer',
+    _focusVisible: {
+      outline: 'none',
+    },
   },
   variants: {
     visual: {
       solid: {
-        minWidth: '160px',
         color: '#526A7C',
-        backgroundColor: '#FFFFFF',
+        bg: '#FFFFFF',
         borderRight: '1px solid #cad6e9',
         borderBottom: '1px solid #cad6e9',
-        borderRadius: '10px',
-        transition: 'color .3s',
         _hover: {
-          backgroundColor: '#FFFFFF',
+          bg: '#F5F7FA',
         },
       },
       link: {
         display: 'inline-block',
         position: 'relative',
-        color: '#314aff',
+        color: '#000000',
+        fontWeight: '500',
         padding: '2px 15px',
-        background: 'none',
+        bg: 'transparent',
         textDecoration: 'none',
         zIndex: 4,
         _before: {
-          content: "''",
+          content: '""',
           position: 'absolute',
           bottom: '5px',
           left: '50%',
           transform: 'translateX(-50%)',
-          width: '0', // Начальная ширина 0
+          width: '0',
           height: '2px',
-          backgroundColor: '#314aff',
-          transition: 'width 0.3s, background-color 0.3s',
-        },
-        '& span': {
-          position: 'relative',
-          display: 'inline-block',
-          _before: {
-            content: "''",
-            position: 'absolute',
-            bottom: '-5px', // Сдвигаем линию под текст
-            left: '0',
-            width: '100%', // Ширина равна тексту в <p>
-            height: '2px',
-            backgroundColor: 'transparent',
-            transition: 'background-color 0.3s',
-          },
-          '&[data-state="open"]::before': {
-            backgroundColor: '#314aff', // Теперь работает!
-          },
-        },
-        _focus: {
-          _before: {
-            backgroundColor: '#314aff',
-          },
+          bg: '#314aff',
+          transition: 'width 0.3s',
         },
         _hover: {
-          '& span::before': {
-            backgroundColor: '#314aff',
+          color: '#314aff',
+          _before: {
+            width: 'calc(100% - 30px)',
           },
         },
-        _focusVisible: {
-          outline: 'none',
-        },
-        '&[data-state="open"] span::before': {
-          backgroundColor: '#314aff !important',
+        '&[data-state="open"]': {
+          color: '#314aff',
+          _before: {
+            width: 'calc(100% - 30px)',
+          },
         },
       },
     },
     size: {
       sm: {
         fontSize: '14px',
-        padding: '10px 22px 9px 22px',
+        padding: '10px 22px',
+      },
+      md: {
+        fontSize: '16px',
+        padding: '12px 24px',
       },
     },
   },
+  defaultVariants: {
+    visual: 'solid',
+    size: 'md',
+  },
 });
-export default buttonRecipe;

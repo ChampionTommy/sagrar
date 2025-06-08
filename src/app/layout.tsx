@@ -1,8 +1,12 @@
 import type { Metadata, Viewport } from 'next';
 
 import { Provider } from '@/components/ui/provider';
-import { Layout } from '@/lib/layout';
-import '../lib/styles/globals.css';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
+
+import '@/lib/styles/globals.css';
+import { Flex } from '@chakra-ui/react';
+
 type RootLayoutProps = {
   children: React.ReactNode;
 };
@@ -34,7 +38,11 @@ const RootLayout = ({ children }: RootLayoutProps) => {
     <html lang="en" suppressHydrationWarning>
       <body>
         <Provider>
-          <Layout>{children}</Layout>
+          <Header />
+          <Flex as="main" flexGrow="1" flexShrink="0">
+            {children}
+          </Flex>
+          <Footer />
         </Provider>
       </body>
     </html>

@@ -1,26 +1,105 @@
-import { Box, Link } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 import { Menu, Portal } from '@chakra-ui/react';
-import { NavbarProps } from '@/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
+import { Link } from '@/components/ui/link';
+
+interface MenuItemBase {
+  id: string;
+  title: string;
+}
+
+interface MenuItemLink extends MenuItemBase {
+  url: string;
+}
+
+interface MenuItemWithChildren extends MenuItemBase {
+  items: MenuItemLink[];
+}
+
+type MenuItem = MenuItemLink | MenuItemWithChildren;
+
+interface MenuSection {
+  title: string;
+  items?: MenuItem[];
+}
+
+interface NavbarProps {
+  menu: {
+    items: MenuSection[];
+  };
+  headerRef: React.RefObject<HTMLElement>;
+  handleClickRef?: (e: React.MouseEvent) => void;
+  isSticky: boolean;
+}
+
+interface NavbarItemProps {
+  item: MenuItem;
+}
+
+const NavbarItem = ({ item }: NavbarItemProps) => {
+  if ('items' in item) {
+    return (
+      <Box width="25%" pr="30px" mb="40px">
+        <Heading fontSize="18px" color="black">
+          {item.title}
+        </Heading>
+        {item.items.map((subItem) => (
+          <Link
+            key={subItem.id}
+            href={subItem.url}
+            visual="link"
+            display="flex"
+            flexDirection="col"
+          >
+            {subItem.title}
+          </Link>
+        ))}
+      </Box>
+    );
+  }
+  return (
+    <Link href={item.url} visual="link">
+      {item.title}
+    </Link>
+  );
+};
 
 export const Navbar = ({ menu, headerRef, handleClickRef }: NavbarProps) => {
   const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
-
+  console.log(anchorRect);
   useEffect(() => {
     if (!headerRef?.current) return;
 
     const updatePosition = () => {
-      setAnchorRect(headerRef.current!.getBoundingClientRect());
+      const rect = headerRef.current!.getBoundingClientRect();
+      setAnchorRect((prev) =>
+        prev?.width === rect.width && prev?.height === rect.height ? prev : rect
+      );
     };
 
-    updatePosition();
+    const resizeObserver = new ResizeObserver(updatePosition);
+    resizeObserver.observe(headerRef.current);
 
-    window.addEventListener('resize', updatePosition);
-    return () => window.removeEventListener('resize', updatePosition);
+    return () => resizeObserver.disconnect();
   }, [headerRef]);
 
-  const getAnchorRect = () => anchorRect;
+  const handleButtonClick = useCallback(
+    (e: React.MouseEvent) => {
+      handleClickRef?.(e);
+      if (headerRef?.current) {
+        setAnchorRect(headerRef.current.getBoundingClientRect());
+      }
+    },
+    [handleClickRef, headerRef]
+  );
+
+  const getAnchorRect = useCallback((): DOMRect | null => {
+    if (!headerRef.current) return null;
+
+    const rect = headerRef.current.getBoundingClientRect();
+    return new DOMRect(rect.left, rect.top, rect.width, rect.height);
+  }, [headerRef]);
 
   return (
     <>
@@ -30,17 +109,14 @@ export const Navbar = ({ menu, headerRef, handleClickRef }: NavbarProps) => {
           positioning={{
             getAnchorRect,
             placement: 'bottom-start',
+            strategy: 'fixed',
           }}
         >
           <Menu.Trigger asChild>
             <Button
+              aria-haspopup="menu"
               visual="link"
-              onClick={(e) => {
-                handleClickRef?.(e);
-                if (headerRef?.current) {
-                  setAnchorRect(headerRef.current.getBoundingClientRect());
-                }
-              }}
+              onClick={handleButtonClick}
               data-menu-trigger
             >
               <span>{section.title}</span>
@@ -50,11 +126,7 @@ export const Navbar = ({ menu, headerRef, handleClickRef }: NavbarProps) => {
             <Menu.Positioner width="100%">
               <Menu.Content
                 position="absolute"
-                display="block"
-                isolation="isolate"
-                width="100%"
                 top="-9px"
-                left="-8px"
                 paddingTop="30px"
                 paddingBottom="30px"
                 borderBottom="1px solid #c7d5eb"
@@ -62,44 +134,12 @@ export const Navbar = ({ menu, headerRef, handleClickRef }: NavbarProps) => {
                 backgroundColor="#F6F6F6"
                 shadow="none"
                 borderRadius="0px"
+                width="100%"
+                transition="none"
               >
-                <Box
-                  width="100%"
-                  display="flex"
-                  justifyContent="flex-start"
-                  alignItems="flex-start"
-                  flexWrap="wrap"
-                  fontWeight="500"
-                  fontSize="14px"
-                  lineHeight="16px"
-                >
-                  {section.items?.map((subsection) => (
-                    <Box
-                      as="div"
-                      display="flex"
-                      flexDirection="column"
-                      width="25%"
-                      paddingRight="30px"
-                      marginBottom="40px"
-                      key={subsection.id}
-                    >
-                      {'url' in subsection ? (
-                        <Link href={subsection.url} color="blue">
-                          {subsection.title}
-                        </Link>
-                      ) : (
-                        <>
-                          <Link paddingInline="0px" fontWeight="bold">
-                            {subsection.title}
-                          </Link>
-                          {subsection.items.map((item) => (
-                            <Link key={item.id} href={item.url}>
-                              {item.title}
-                            </Link>
-                          ))}
-                        </>
-                      )}
-                    </Box>
+                <Box maxW="1440px" mx="auto" display="flex" flexWrap="wrap">
+                  {section.items?.map((item) => (
+                    <NavbarItem key={item.id} item={item} />
                   ))}
                 </Box>
               </Menu.Content>
