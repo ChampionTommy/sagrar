@@ -11,19 +11,17 @@ import ArticleCard from '@/components/ui/article-card';
 const newsData: NewsItem[] = [
   {
     id: '1',
-    variant: 'large',
-    date: '3 Июн, 15:16',
+    variant: 'event',
+    date: '3 Июн',
     title: 'УУНиТ включен в 100 лучших вузов России в рейтинге RAEX',
-    imageUrl:
-      'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
     previewImageUrl:
       'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
     href: '/news/1',
   },
   {
     id: '2',
-    variant: 'bg-picture',
-    date: '2 Июн, 14:00',
+    variant: 'event',
+    date: '2 Июн',
     title: 'Историко-патриотический фестиваль «Река времени»',
     previewImageUrl:
       'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
@@ -31,26 +29,25 @@ const newsData: NewsItem[] = [
   },
   {
     id: '3',
-    variant: 'text-blue',
-    date: '2 Июн, 14:00',
+    variant: 'event',
+    date: '2 Июн',
     title: 'Историко-патриотический фестиваль «Река времени»',
     href: '/news/2',
   },
   {
     id: '4',
-    variant: 'fon',
-    date: '2 Июн, 14:00',
+    variant: 'event',
+    date: '2 Июн',
     title: 'Историко-патриотический фестиваль «Река времени»',
-    imageUrl:
-      'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
     previewImageUrl:
       'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
+
     href: '/news/2',
   },
   {
     id: '5',
-    variant: 'bg-picture',
-    date: '2 Июн, 14:00',
+    variant: 'event',
+    date: '2 Июн',
     title: 'Историко-патриотический фестиваль «Река времени»',
     previewImageUrl:
       'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
@@ -58,54 +55,63 @@ const newsData: NewsItem[] = [
   },
   {
     id: '6',
-    variant: 'text-blue',
-    date: '2 Июн, 14:00',
+    variant: 'event',
+    date: '2 Июн',
     title: 'Историко-патриотический фестиваль «Река времени»',
-    imageUrl:
+    previewImageUrl:
       'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
     href: '/news/2',
   },
   {
     id: '7',
-    variant: 'fon',
-    date: '2 Июн, 14:00',
+    variant: 'event',
+    date: '2 Июн',
     title: 'Историко-патриотический фестиваль «Река времени»',
-    imageUrl:
-      'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
     previewImageUrl:
       'https://uust.ru/media/press-center/news/covers/2025/06/2025-06-06_15-19-27.webp',
     href: '/news/2',
   },
 ];
 
-export const News = () => {
+export const Events = () => {
   const recipeBox = useRecipe({ recipe: boxRecipe });
   const stylesBox = recipeBox({ size: 'main' });
 
   return (
     <Container
       as="section"
-      aria-labelledby="news-heading"
+      aria-labelledby="events-heading"
       py={{ base: '50px', md: '100px' }}
       maxW="1440px"
       px={0}
+      position="relative"
+      backgroundColor="var(--cl-dark-purple)"
+      paddingTop="70px"
+      paddingBottom="25px"
+      overflow="hidden"
+      color="white"
+      zIndex="1"
     >
-      <Box css={stylesBox}>
+      <Box
+        css={stylesBox}
+        backgroundColor="#142a68"
+        paddingTop="70px"
+        paddingBottom="25px"
+      >
         <Flex justify="space-between" align="center" mb={{ base: 5, md: 8 }}>
           <Text as="h2" id="news-heading" fontSize="2xl" fontWeight="bold">
-            Новости
+            Объявления
           </Text>
           <Button visual="solid" size="sm" _hover={{ textDecoration: 'none' }}>
-            <Link href="/news">Смотреть все новости</Link>
+            <Link href="/news">Смотреть все объявления</Link>
           </Button>
         </Flex>
         <Grid
           templateColumns={{
             base: 'repeat(5, 1fr)',
-            md: 'repeat(5, 1fr)',
-            lg: 'repeat(5, 1fr)',
           }}
           gap={{ base: 4, md: 6 }}
+          autoRows="1fr .3fr 1fr"
         >
           {newsData.map((item, index) => (
             <ArticleCard

@@ -1,3 +1,4 @@
+'use client';
 import { Box, HTMLChakraProps, useRecipe } from '@chakra-ui/react';
 import boxRecipe from '@/lib/styles/theme/recipes/box.recipe';
 

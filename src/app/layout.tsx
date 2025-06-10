@@ -39,7 +39,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       <body>
         <Provider>
           <Header />
-          <Flex as="main" flexGrow="1" flexShrink="0">
+          <Flex as="main" flexGrow="1" flexDirection="column" flexShrink="0">
             {children}
           </Flex>
           <Footer />

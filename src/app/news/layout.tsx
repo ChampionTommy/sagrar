@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
-import { Box } from '@chakra-ui/react';
+import { Container } from '@/components/ui/container';
 
 interface NewsLayoutProps {
   children: ReactNode;
 }
 
 const NewsLayout = ({ children }: NewsLayoutProps) => {
-  return <Box as="main">{children}</Box>;
+  return <Container>{children}</Container>;
 };
 
 export default NewsLayout;
