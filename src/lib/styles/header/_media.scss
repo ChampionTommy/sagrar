@@ -1,0 +1,35 @@
+.header {
+  padding-bottom: 70px;
+
+  @media (max-width: 1199px) {
+    padding-bottom: 70px;
+
+    &__top {
+      display: none;
+    }
+
+    &__bottom {
+      position: fixed;
+      top: 0;
+      height: 70px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+
+  &__logo {
+
+    @media (max-width: 374px) {
+      .logo__text {
+        display: none;
+      }
+    }
+  }
+}
+
+.header-menu {
+
+  @media (max-width: 1199px) {
+    display: none;
+  }
+}

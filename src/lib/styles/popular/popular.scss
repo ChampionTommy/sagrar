@@ -1,0 +1,108 @@
+@media (min-width: 552px) {
+  .popular-pages {
+    padding-top: 40px;
+  }
+}
+@media (min-width: 388px) {
+  .popular-pages {
+    padding-top: 20px;
+  }
+}
+@media (min-width: 1200px) {
+  .popular-pages {
+    padding-top: 110px;
+    padding-bottom: 80px;
+  }
+}
+@media (min-width: 768px) {
+  .popular-pages {
+    padding-top: 60px;
+    padding-bottom: 50px;
+  }
+}
+.popular-pages {
+  position: relative;
+  padding-top: 35px;
+  padding-bottom: 30px;
+  z-index: 2;
+}
+@media (min-width: 1600px) {
+  .popular-pages__content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+.popular-pages__content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+@media (min-width: 1200px) {
+  .popular-pages__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+.popular-pages-slider {
+  position: relative;
+  max-width: 1250px;
+  overflow: hidden;
+  padding: 5px 5px 15px 5px;
+}
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+.popular-page {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  height: 120px;
+  text-decoration: none;
+  /* background: linear-gradient(165deg, var(--cl-blue-7), var(--cl-blue-3)); */
+  background: var(--horizontal-gradient-dark-blue);
+  /* background-image: url(../images/redesign/popular-pages/fon-b.png); */
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 9px 9px -5px rgba(255, 255, 255, 0.3);
+  transition: all .8s;
+  padding: 25px;
+}
+
+.popular-page__title {
+  /* font-family: var(--ff-fira-book); */
+  font-weight: 400;
+  color: var(--cl-white);
+}
+@media (min-width: 768px) {
+  .h4, h4 {
+    font-size: 18px;
+    line-height: 21px;
+  }
+}
+.h4, h4 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+.swiper-slide {
+  flex-shrink: 0;
+  width: 220px;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+  margin-right: 35px;
+}

@@ -1,11 +1,15 @@
-import { News } from '@/components/news';
-import { Events } from '@/components/events';
+import { Hello } from '@/lib/component/hello';
+import { Video } from '@/lib/component/video';
+import { Popular } from '@/lib/component/popular';
+import { NewsCardGrid } from '@/lib/component/newsCardGrid';
 
 export default function Page() {
   return (
     <>
-      <News />
-      <Events />
+      <Video />
+      <Hello />
+      <Popular />
+      <NewsCardGrid/>
     </>
   );
 }
